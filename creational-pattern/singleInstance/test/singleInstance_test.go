@@ -1,4 +1,4 @@
-package singleInstance
+package test
 
 import (
 	"github.com/go-summary/design-patterns/creational-pattern/singleInstance/hungryman"
