@@ -1,6 +1,9 @@
 package builder
 
-import "sync"
+import (
+	prototype "github.com/go-summary/design-patterns/creational-pattern/protptype"
+	"sync"
+)
 
 // 针对对象成员较多，创建对象逻辑较为繁琐的场景
 // 适合使用建造者模式来进行优化
@@ -14,6 +17,7 @@ type Message struct {
 	Header *Header
 	Body   *Body
 }
+
 type Header struct {
 	SrcAddr  string `json:"srcAddr, omitempty"`
 	SrcPort  uint64
@@ -23,6 +27,12 @@ type Header struct {
 }
 type Body struct {
 	Items []string
+}
+
+// prototype接口
+func (m *Message) Clone() prototype.Prototype {
+	msg := *m
+	return &msg
 }
 
 // 建造者模式的方式

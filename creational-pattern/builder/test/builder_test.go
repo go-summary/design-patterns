@@ -1,14 +1,15 @@
-package builder
+package test
 
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/go-summary/design-patterns/creational-pattern/builder"
 	"testing"
 )
 
 func TestBuilder(t *testing.T) {
 	// 使用消息建造者进行对象创建
-	message := Builder().
+	message := builder.Builder().
 		WithSrcAddr("192.168.0.1").
 		WithSrcPort(8081).
 		WithDestAddr("192.168.0.2").
