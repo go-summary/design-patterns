@@ -1,7 +1,7 @@
 package builder
 
 import (
-	prototype "github.com/go-summary/design-patterns/creational-pattern/protptype"
+	prototype "github.com/go-summary/design-patterns/creational-pattern/prototype"
 	"sync"
 )
 
