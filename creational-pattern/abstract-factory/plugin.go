@@ -16,7 +16,7 @@ import (
 // 其中input、filter和output三类插件的创建使用抽象工厂模式，而pipeline的创建则使用工厂方法模式。
 
 // 插件抽象接口定义
-// 工厂方法模式
+// 抽象工厂模式
 type Plugin interface{}
 type Type uint8
 
@@ -26,7 +26,6 @@ const (
 	OutputType
 )
 
-// 抽象工厂模式
 // 过滤插件接口
 type Filter interface {
 	Plugin // 实现插件接口，继承插件接口
