@@ -1,8 +1,8 @@
 package singleInstance
 
 import (
-	"github.com/go-summary/design-patterns/singleInstance/hungryman"
-	"github.com/go-summary/design-patterns/singleInstance/lazyman"
+	"github.com/go-summary/design-patterns/creational-pattern/singleInstance/hungryman"
+	"github.com/go-summary/design-patterns/creational-pattern/singleInstance/lazyman"
 	"testing"
 )
 
