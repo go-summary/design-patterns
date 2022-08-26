@@ -1,14 +1,21 @@
-package abstract_factory
+package composite
+
+import "fmt"
+
+type Type uint8
+
+const (
+	InputType = iota
+	FilterType
+	OutputType
+)
 
 // 消息管道
 type Pipeline struct {
+	status Status
 	input  Input
 	filter Filter
-	output OutPut
-}
-
-type PipelineConfig struct {
-	Input, Filter, OutPut PluginConfig
+	output Output
 }
 
 // msg处理流程 input -> filter -> output
@@ -16,6 +23,30 @@ func (p *Pipeline) Exec() {
 	msg := p.input.Receive()
 	msg = p.filter.Process(msg)
 	p.output.Send(msg)
+}
+
+func (p *Pipeline) Start() {
+	p.output.Start()
+	p.filter.Start()
+	p.input.Start()
+	p.status = Started
+	fmt.Println("Hello input plugin started.")
+}
+
+func (p *Pipeline) Stop() {
+	p.output.Stop()
+	p.filter.Stop()
+	p.input.Stop()
+	p.status = Stopped
+	fmt.Println("Hello input plugin Stopped.")
+}
+
+func (p *Pipeline) Status() Status {
+	return p.status
+}
+
+type PipelineConfig struct {
+	Input, Filter, OutPut PluginConfig
 }
 
 // 保存用于创建插件的工厂实例，key为插件类型，value为抽象工厂接口
@@ -26,19 +57,17 @@ func factoryOf(t Type) Factory {
 	return factory
 }
 
-// pipeline 工厂方法，根据配置创建一个Pipelie实例
 func Of(conf PipelineConfig) *Pipeline {
 	p := &Pipeline{}
 	p.input = factoryOf(InputType).Create(conf.Input).(Input)
 	p.filter = factoryOf(FilterType).Create(conf.Filter).(Filter)
-	p.output = factoryOf(OutputType).Create(conf.OutPut).(OutPut)
+	p.output = factoryOf(OutputType).Create(conf.OutPut).(Output)
 	return p
 }
 
 func DefaultConfig() PipelineConfig {
 	conf := PipelineConfig{}
-	// 这里测试的是msg输入插件
-	conf.Input = PluginConfig{Name: "msg"}
+	conf.Input = PluginConfig{Name: "hello"}
 	conf.Filter = PluginConfig{Name: "upper"}
 	conf.OutPut = PluginConfig{Name: "console"}
 	return conf
